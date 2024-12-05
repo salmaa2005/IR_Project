@@ -1,8 +1,6 @@
 import org.apache.hadoop.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.io.*;
+import java.util.*;
 
 public class IndexBuilder
 {
