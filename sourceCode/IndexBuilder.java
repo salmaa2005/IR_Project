@@ -59,4 +59,24 @@ public class IndexBuilder
             // ex: this  doc1:[0,3,7];doc2[1,2];
         }
     }
+    public static void main(String[] args) throws Exception 
+    {
+      if (args.length != 2)
+      {
+        System.err.println("Usage: IndexBuilder <input path> <output path>");
+        System.exit(-1);
+      }
+      Configuration conf = new Configuration();
+      Job job = Job.getInstance(conf, "Positional Index Builder");
+      job.setJarByClass(IndexBuilder.class);
+      job.setMapperClass(TokenizerMapper.class);
+      job.setReducerClass(PositionalIndexReducer.class);
+      job.setMapOutputKeyClass(Text.class);
+      job.setMapOutputValueClass(Text.class);
+      job.setOutputKeyClass(Text.class);
+      job.setOutputValueClass(Text.class);
+      FileInputFormat.addInputPath(job, new Path(args[0]));
+      FileOutputFormat.setOutputPath(job, new Path(args[1]));
+      System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
 }
